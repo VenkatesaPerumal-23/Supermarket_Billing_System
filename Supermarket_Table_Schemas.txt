@@ -1,0 +1,58 @@
+Customers Table:
+
+CREATE TABLE IF NOT EXISTS customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    UNIQUE (name),
+    UNIQUE (email)
+);
+ 
+Products Table:
+
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DOUBLE NOT NULL,
+    stock_quantity INT NOT NULL,
+    gst_percentage DOUBLE NOT NULL,
+    UNIQUE (name)
+);
+ 
+Purchase_Details Table:
+
+CREATE TABLE IF NOT EXISTS purchase_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    quantity INT,
+    total_price DOUBLE,
+    discount_applied DOUBLE,
+    purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+Coupons Table:
+
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    discount DOUBLE NOT NULL
+);
+
+User_Payments Table:
+
+CREATE TABLE IF NOT EXISTS user_payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    customer_name VARCHAR(255) NOT NULL,
+    payment_amount DECIMAL(10, 2) NOT NULL,
+    payment_mode VARCHAR(50) NOT NULL,
+    payment_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+
